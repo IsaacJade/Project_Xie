@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81eb0b00d2301bf46bc6666023297025, type: 3}
   m_Name: Edwin
   m_EditorClassIdentifier: 
-  name: 
-  description: 
+  name: 123
+  description: 456
   artwork: {fileID: 0}
-  manaCost: 0
-  attack: 0
-  health: 0
+  manaCost: 1
+  attack: 7
+  health: 9
