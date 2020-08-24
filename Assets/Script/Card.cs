@@ -13,7 +13,18 @@ public class Card : ScriptableObject {
 	public int manaCost;
 	public int attack;
 	public int health;
-
+	public Card(string Name, string Description, int ManaCost, int Attack,int Health)
+	{
+		name = Name;
+		description = Description;
+		manaCost = ManaCost;
+		attack = Attack;
+		health = Health;
+	}
+	public Card()
+	{
+		//default constructor
+	}
 	public void Print ()
 	{
 		Debug.Log(name + ": " + description + " The card costs: " + manaCost);
