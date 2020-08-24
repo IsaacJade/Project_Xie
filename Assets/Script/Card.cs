@@ -21,6 +21,10 @@ public class Card : ScriptableObject {
 		attack = Attack;
 		health = Health;
 	}
+	public Card()
+	{
+		//default constructor
+	}
 	public void Print ()
 	{
 		Debug.Log(name + ": " + description + " The card costs: " + manaCost);
