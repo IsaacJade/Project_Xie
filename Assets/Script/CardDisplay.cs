@@ -16,6 +16,8 @@ public class CardDisplay : MonoBehaviour {
 	public Text attackText;
 	public Text healthText;
 
+	public bool cardBack;
+
 	// Use this for initialization
 	void Start () {
 		nameText.text = card.name;
@@ -26,6 +28,7 @@ public class CardDisplay : MonoBehaviour {
 		manaText.text = card.manaCost.ToString();
 		attackText.text = card.attack.ToString();
 		healthText.text = card.health.ToString();
+		cardBack = false;
 	}
 	
 }
