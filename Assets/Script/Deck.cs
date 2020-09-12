@@ -5,8 +5,10 @@ using UnityEngine.UI;
 public class Deck : MonoBehaviour
 {
     public List<Card> deck = new List<Card> ();
+    private List<Card> graveyard = new List<Card>();
     public Text remain;
     private int numCardRemain;
+    public GameObject handZone;
     private void Awake() 
     {
 
@@ -17,11 +19,12 @@ public class Deck : MonoBehaviour
         deck.Add(Resources.Load<Card>("Cards/test5"));
 
         shuffle();
-
-        numCardRemain = deck.Count;
+        countUpdate();
+       
+       // update when change the number
     }
     private void Update() {
-        remain.text = numCardRemain.ToString();
+        // do nothing here
     }
     public void shuffle()
     {
@@ -32,13 +35,23 @@ public class Deck : MonoBehaviour
          deck[randomIndex] = temp;
      }
     }
-    public Card drawCard()
+    public void drawCard()
     {
-        //install afterward
-        return new Card();
+        Card tmp = deck.PopAt(deck.Count);
+        countUpdate();
+        //return tmp;
     }
     public int getRemain()
     {
         return numCardRemain;
+    }
+    private void countUpdate()
+    {
+        numCardRemain = deck.Count;
+        remain.text = numCardRemain.ToString();
+    }
+    public void test()
+    {
+        Debug.Log("HI");
     }
 }
