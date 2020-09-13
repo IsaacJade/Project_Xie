@@ -18,6 +18,7 @@ public class Deck : MonoBehaviour
         deck.Add(Resources.Load<Card>("Cards/test4"));
         deck.Add(Resources.Load<Card>("Cards/test5"));
 
+        Debug.Log("1");
         shuffle();
         countUpdate();
        
