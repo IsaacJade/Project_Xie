@@ -31,6 +31,7 @@ public class Card : ScriptableObject {
 	public void Print ()
 	{
 		Debug.Log(name + ": " + description + " The card costs: " + manaCost);
+		Debug.Log(name + ": " + description + " The card costs: " + manaCost);
 	}
 
 
