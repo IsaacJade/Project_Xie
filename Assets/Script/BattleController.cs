@@ -19,6 +19,7 @@ public class BattleController : MonoBehaviour
     public Unit playerunit;
     public Unit enemyunit;
 
+    public QTETracker QTETracker;
     public BattleHUD playerHUD;
     public BattleHUD enemyHUD;
     public TurnHUD turnCounterText;
@@ -57,11 +58,23 @@ public class BattleController : MonoBehaviour
 
      IEnumerator PlayerAttack()
     {
+        QTETracker.playerturn = true;
+        yield return QTETracker.StartCoroutine("InstantiateCircle", QTETracker.TransPrefab.GetComponent<CircleTrans>());
+        
+        bool isDead = false;
+        if (QTETracker.Slider.value > 75)
+        {
+            isDead = enemyunit.TakeDamage(playerunit.damage);              //damge the enemy
 
-        bool isDead = enemyunit.TakeDamage(playerunit.damage);              //damge the enemy
-
-        enemyHUD.SetHP(enemyunit.currentHP);
-        Log.text = "Player attack ";
+            enemyHUD.SetHP(enemyunit.currentHP);
+            Log.text = "Player attack success";
+        }
+        else
+        {
+            Log.text = "Player attack failed";
+        }
+        //Debug.Log("score 0");
+        QTETracker.Slider.value = 0;
 
         yield return new WaitForSeconds(delay);
 
@@ -81,10 +94,21 @@ public class BattleController : MonoBehaviour
     {
         Log.text = " enemy attack ";
         yield return new WaitForSeconds(delay);
+        QTETracker.playerturn = false;
+        yield return QTETracker.StartCoroutine("InstantiateCircle", QTETracker.TransPrefab.GetComponent<CircleTrans>());
 
-        bool isDead = playerunit.TakeDamage(enemyunit.damage);
-
-        playerHUD.SetHP(playerunit.currentHP);
+        bool isDead = false;
+        if (QTETracker.EnemySlider.value > 90)
+        {
+            Log.text = "Enemy attack failed";
+        }
+        else
+        {
+            isDead = playerunit.TakeDamage(enemyunit.damage);
+            playerHUD.SetHP(playerunit.currentHP);
+            Log.text = "Enemy attack success";
+        }
+        QTETracker.EnemySlider.value = 0;
 
         yield return new WaitForSeconds(delay);
 
