@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tracker: {fileID: 0}
+  overtime: 0
 --- !u!1 &5532263463487472587
 GameObject:
   m_ObjectHideFlags: 0

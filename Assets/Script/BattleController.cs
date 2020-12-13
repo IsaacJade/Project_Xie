@@ -125,7 +125,10 @@ public class BattleController : MonoBehaviour
 
     }
 
-
+    public void debuglog()
+    {
+        Debug.Log("testing");
+    }
     void EndBattle()
     {
         if(state == BattleState.won)
@@ -140,6 +143,7 @@ public class BattleController : MonoBehaviour
         
      void PlayerTurn ()
     {
+        QTETracker.DeleteObjects();
         Log.text = "Player turn wait for command ";
         turnCounter++;
         turnCounterText.SetTurn(turnCounter);

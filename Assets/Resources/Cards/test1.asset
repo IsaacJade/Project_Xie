@@ -15,7 +15,7 @@ MonoBehaviour:
   name: 1
   description: 1
   artwork: {fileID: 21300000, guid: b85c1d751aeba4e4c9acbb094f72a042, type: 3}
-  manaCost: 1
   attack: 1
-  health: 1
+  TransPrefab: {fileID: 3412196171027750387, guid: 53ccb6593c93d9947b7b4b962449593a,
+    type: 3}
   cardBack: 0

@@ -12,23 +12,24 @@ public class CardDisplay : MonoBehaviour {
 
 	public Image artworkImage;
 
-	public Text manaText;
 	public Text attackText;
-	public Text healthText;
 
+	public GameObject transPrefab;
 	public bool cardBack;
+	public CardSystemManager CardSystemManager;
 
 	// Use this for initialization
 	void Start () {
 		nameText.text = card.name;
 		descriptionText.text = card.description;
-
 		artworkImage.sprite = card.artwork;
-
-		manaText.text = card.manaCost.ToString();
 		attackText.text = card.attack.ToString();
-		healthText.text = card.health.ToString();
+		transPrefab = card.TransPrefab;
 		cardBack = false;
 	}
-	
+	public void qteTest()
+    {
+		CardSystemManager.BattleController.QTETracker.StartCoroutine("InstantiateCircle", transPrefab.GetComponent<CircleTrans>());
+
+	}
 }

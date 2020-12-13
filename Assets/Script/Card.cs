@@ -10,18 +10,16 @@ public class Card : ScriptableObject {
 
 	public Sprite artwork;
 
-	public int manaCost;
+	//public int manaCost;
 	public int attack;
-	public int health;
-
+	//public int health;
+	public GameObject TransPrefab;
 	public bool cardBack;
 	public Card(string Name, string Description, int ManaCost, int Attack,int Health)
 	{
 		name = Name;
 		description = Description;
-		manaCost = ManaCost;
 		attack = Attack;
-		health = Health;
 		cardBack = false;
 	}
 	public Card()
@@ -30,7 +28,7 @@ public class Card : ScriptableObject {
 	}
 	public void Print ()
 	{
-		Debug.Log(name + ": " + description + " The card costs: " + manaCost);
+		//Debug.Log(name + ": " + description + " The card costs: " + manaCost);
 	}
 
 
