@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class CardDisplay : MonoBehaviour {
 
 	public Card card;
@@ -12,7 +12,7 @@ public class CardDisplay : MonoBehaviour {
 
 	public Image artworkImage;
 
-	public Text attackText;
+	public TextMeshProUGUI cost;
 
 	public GameObject transPrefab;
 	public bool cardBack;
@@ -23,7 +23,7 @@ public class CardDisplay : MonoBehaviour {
 		nameText.text = card.name;
 		descriptionText.text = card.description;
 		artworkImage.sprite = card.artwork;
-		attackText.text = card.attack.ToString();
+		cost.text = card.attack.ToString();
 		transPrefab = card.TransPrefab;
 		cardBack = false;
 	}
