@@ -4,42 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Deck : MonoBehaviour
 {
-    public List<Card> deck = new List<Card> ();
-    private List<Card> graveyard = new List<Card>();
-    public Text remain;
+    public List<Card> active = new List<Card> ();
+    private List<Card> reserve = new List<Card>();
+    public List<Card> graveyard = new List<Card>();
     private int numCardRemain;
-    public GameObject handZone;
-    private void Awake() 
-    {
 
-        deck.Add(Resources.Load<Card>("Cards/test1"));
-        deck.Add(Resources.Load<Card>("Cards/test2"));
-        deck.Add(Resources.Load<Card>("Cards/test3"));
-        deck.Add(Resources.Load<Card>("Cards/test4"));
-        deck.Add(Resources.Load<Card>("Cards/test5"));
-
-        shuffle();
-        countUpdate();
-       
-       // update when change the number
-    }
-    private void Update() {
-        // do nothing here
-    }
     public void shuffle()
     {
-        for (int i = 0; i < deck.Count; i++) {
-         Card temp = deck[i];
-         int randomIndex = Random.Range(i, deck.Count);
-         deck[i] = deck[randomIndex];
-         deck[randomIndex] = temp;
+        for (int i = 0; i < active.Count; i++) {
+         Card temp = active[i];
+         int randomIndex = Random.Range(i, active.Count);
+         active[i] = active[randomIndex];
+         active[randomIndex] = temp;
      }
     }
-    public void drawCard()
+    public Card drawCard()
     {
-        Card tmp = deck.PopAt(deck.Count);
+        Card tmp = active.PopAt(active.Count);
         countUpdate();
-        //return tmp;
+        return tmp;
     }
     public int getRemain()
     {
@@ -47,11 +30,17 @@ public class Deck : MonoBehaviour
     }
     private void countUpdate()
     {
-        numCardRemain = deck.Count;
-        remain.text = numCardRemain.ToString();
+        numCardRemain = active.Count;
     }
-    public void test()
+
+    public void AddToReserve(Card card)
     {
-        Debug.Log("HI");
+        reserve.Add(card);
     }
+    public void ReserveExecute()
+    {
+        reserve.ForEach(delegate (Card pCard) { pCard.execute(); graveyard.Add(pCard); });
+        reserve.Clear();
+    }
+
 }

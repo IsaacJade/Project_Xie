@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class HitCircle : MonoBehaviour
 {
     private float time;
-    public QTETracker tracker;
     private bool isClick;
     private float ringMinScale;
     private float ringStartScale;
@@ -19,9 +18,9 @@ public class HitCircle : MonoBehaviour
        // Debug.Log("Circle Start called");
         ringMinScale = 1f;
         isClick = false;
-        time = tracker.shrinkTime;
+        time = QTETracker.shrinkTime;
         ringStartScale = transform.GetChild(2).GetComponent<RectTransform>().localScale.x;
-        scaleModifier = (ringStartScale - ringMinScale) / tracker.shrinkTime;
+        scaleModifier = (ringStartScale - ringMinScale) / QTETracker.shrinkTime;
         overtime = false;
     }
 
@@ -64,13 +63,13 @@ public class HitCircle : MonoBehaviour
             if (time < 0.25f && time > -0.1f)
             {
                 //Debug.Log("perfect");
-                tracker.UpdateSlider(25);
+                QTETracker.UpdateSlider();
                 //根据弱点条，qte数量计算
             }
             else if (time >= 0.25f && time > -0.1f && time < 0.5f)
             {
                 //Debug.Log("normal");
-                tracker.UpdateSlider(10);
+                QTETracker.UpdateSlider();
             }
             else
             {

@@ -2,25 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Card", menuName = "Card")]
-public class Card : ScriptableObject {
+//[CreateAssetMenu(fileName = "New Card", menuName = "Card")]
+public abstract class Card : MonoBehaviour {
 
-	public new string name;
+	public string cardName;
 	public string description;
-
 	public Sprite artwork;
+	public int Cost;
+	
 
-	//public int manaCost;
-	public int attack;
-	//public int health;
-	public GameObject TransPrefab;
-	public bool cardBack;
-	public Card(string Name, string Description, int ManaCost, int Attack,int Health)
+
+	public Card(string Name, string Description, int ManaCost, Sprite art)
 	{
-		name = Name;
+		cardName = Name;
 		description = Description;
-		attack = Attack;
-		cardBack = false;
+		Cost = ManaCost;
+		artwork = art;
 	}
 	public Card()
 	{
@@ -28,8 +25,12 @@ public class Card : ScriptableObject {
 	}
 	public void Print ()
 	{
-		//Debug.Log(name + ": " + description + " The card costs: " + manaCost);
+		Debug.Log(name + ": " + description + " The card costs: " + Cost);
 	}
 
+	public virtual void execute()
+    {
+		this.Print();
+    }
 
 }

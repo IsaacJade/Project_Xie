@@ -19,7 +19,7 @@ public class BattleController : MonoBehaviour
     public Unit playerunit;
     public Unit enemyunit;
 
-    public QTETracker QTETracker;
+    //public QTETracker QTETracker;
     public BattleHUD playerHUD;
     public BattleHUD enemyHUD;
     public TurnHUD turnCounterText;
@@ -56,23 +56,41 @@ public class BattleController : MonoBehaviour
         PlayerTurn();
     }
 
+    public int CalDamage(int attack,bool turn)
+    {
+        Slider pSlider = QTETracker.GetSlider(!turn);
+        //int buff
+        float weakspot = 0.5f;
+
+        if (pSlider.value > 45 && pSlider.value <= 75) weakspot = 1;
+            else if (pSlider.value > 75) weakspot = 1.5f;
+        int res = (int)(attack * weakspot);
+        return res;
+    }
+
+
+
+
      IEnumerator PlayerAttack()
     {
         QTETracker.playerturn = true;
-        yield return QTETracker.StartCoroutine("InstantiateCircle", QTETracker.TransPrefab.GetComponent<CircleTrans>());
+        //yield return QTETracker.StartCoroutine("InstantiateCircle", QTETracker.TransPrefab.GetComponent<CircleTrans>());
         
         bool isDead = false;
-        if (QTETracker.Slider.value > 75)
-        {
-            isDead = enemyunit.TakeDamage(playerunit.damage);              //damge the enemy
+        //if (QTETracker.Slider.value > 75)
+        //{
+        //    isDead = enemyunit.TakeDamage(playerunit.damage);              //damge the enemy
 
-            enemyHUD.SetHP(enemyunit.currentHP);
-            Log.text = "Player attack success";
-        }
-        else
-        {
-            Log.text = "Player attack failed";
-        }
+        //    enemyHUD.SetHP(enemyunit.currentHP);
+        //    Log.text = "Player attack success";
+        //}
+        //else
+        //{
+        //    Log.text = "Player attack failed";
+        //}
+        int damage = CalDamage()
+
+
         //Debug.Log("score 0");
         QTETracker.Slider.value = 0;
 

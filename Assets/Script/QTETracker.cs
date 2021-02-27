@@ -7,55 +7,83 @@ public class QTETracker : MonoBehaviour
 {
    
     //public float perfectTime;
-    public float shrinkTime;
+    private static QTETracker pInstance;
+    public static float shrinkTime;
     public Slider Slider;
     public Slider EnemySlider;
     public GameObject CirclePrefab;
     public GameObject TransPrefab;
+    public int unitScore = 20;
     public List<GameObject> hitCircles = new List<GameObject>();
     public float wait;
-    public bool playerturn;
+    public static bool playerturn;
 
     // Start is called before the first frame update
     void Start()
     {
+        if(pInstance == null)
+        {
+            pInstance = new QTETracker();
+        }
         playerturn = true;
         
     }
-    public void UpdateSlider(int value)
+    private static QTETracker privGetInstance()
     {
-        if(playerturn)
+        if(pInstance == null)
         {
-            Slider.value += value;
+            pInstance = new QTETracker();
+        }
+        return pInstance;
+    }
+    public static void UpdateSlider()
+    {
+        QTETracker pTracker = QTETracker.privGetInstance();
+        if(QTETracker.playerturn)
+        {
+            pTracker.Slider.value += pTracker.unitScore;
         }
         else
         {
-            EnemySlider.value += value;
+            pTracker.EnemySlider.value += pTracker.unitScore;
         }
     }
-    public IEnumerator InstantiateCircle(CircleTrans trans)
+    public static Slider GetSlider(bool playerturn)
     {
-        
+        QTETracker pTracker = QTETracker.privGetInstance();
+        if (playerturn)
+        {
+            return pTracker.Slider;
+        }
+        else
+        {
+            return pTracker.EnemySlider;
+        }
+    }
+    public static IEnumerator InstantiateCircle(CircleTrans trans, int score)
+    {
+        QTETracker pTracker = QTETracker.privGetInstance();
+        pTracker.unitScore = score;
         for (int i = 0; i < trans.transforms.Length; i++)
         {
-            GameObject circle = GameObject.Instantiate(CirclePrefab,trans.transforms[i].localPosition,Quaternion.identity);
-            circle.transform.SetParent(this.transform, false);
+            GameObject circle = GameObject.Instantiate(pTracker.CirclePrefab,trans.transforms[i].localPosition,Quaternion.identity);
+            circle.transform.SetParent(pTracker.transform, false);
             HitCircle instance = circle.GetComponent<HitCircle>();
-            instance.tracker = this;
             instance.SetNumber(i + 1);
-            hitCircles.Add(circle);
-            yield return new WaitForSeconds(wait);
+            pTracker.hitCircles.Add(circle);
+            yield return new WaitForSeconds(pTracker.wait);
         }
         yield return new WaitForSeconds(1f);
         yield break;
     }
-    public void DeleteObjects()
+    public static void DeleteObjects()
     {
-        for (int i = 0; i < hitCircles.Count; i++)
+        QTETracker pTracker = QTETracker.privGetInstance();
+        for (int i = 0; i < pTracker.hitCircles.Count; i++)
         {
-            Destroy(hitCircles[i]);
+            Destroy(pTracker.hitCircles[i]);
         }
-        hitCircles.Clear();
+        pTracker.hitCircles.Clear();
     }
     // Update is called once per frame
     void Update()

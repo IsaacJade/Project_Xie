@@ -5,7 +5,6 @@ using UnityEngine;
 public class CardSystemManager : MonoBehaviour
 {
     public BattleController BattleController;
-    List<CardDisplay> cardDisplays = new List<CardDisplay>();
     // Start is called before the first frame update
     void Start()
     {
