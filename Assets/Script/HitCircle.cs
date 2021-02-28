@@ -15,23 +15,24 @@ public class HitCircle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // Debug.Log("Circle Start called");
+        // Debug.Log("Circle Start called");
+        Time.timeScale = 1.0f;
         ringMinScale = 1f;
         isClick = false;
-        time = QTETracker.shrinkTime;
+        time = QTETracker.GetShrinkTime();
         ringStartScale = transform.GetChild(2).GetComponent<RectTransform>().localScale.x;
-        scaleModifier = (ringStartScale - ringMinScale) / QTETracker.shrinkTime;
+        scaleModifier = (ringStartScale - ringMinScale) / QTETracker.GetShrinkTime();
         overtime = false;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(time > 0f)
         {
             if (!isClick)
             {
-                    float delta = Time.deltaTime;
+                float delta = Time.fixedDeltaTime;
                     //Debug.Log(time);
                     time -= delta;
                     SetHitRingScale(delta * scaleModifier);
@@ -39,9 +40,11 @@ public class HitCircle : MonoBehaviour
         } else
         {
             overtime = true;
+            Debug.Log("TimeDone:" + Time.timeSinceLevelLoad);
             this.gameObject.SetActive(false);
         }
     }
+
     public void SetNumber(int i)
     {
         Text text = transform.GetChild(0).GetComponent<Text>();

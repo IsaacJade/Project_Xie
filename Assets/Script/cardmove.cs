@@ -6,13 +6,18 @@ using UnityEngine.EventSystems;
 
 public class cardmove : MonoBehaviour
 {
-    public void Enter()
+    public void cardEnter()
     {
         //鼠标放上，突出所选卡牌
         transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
     }
 
-    public void Exit()
+    public void SwordMoveLeft()
+    {
+        transform.position += new Vector3(100f, 0f, 0f);
+    }
+
+    public void cardExit()
     {
         //挪开鼠标后变回
         transform.localScale = new Vector3(1f, 1f, 1f);

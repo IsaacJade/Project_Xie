@@ -8,7 +8,7 @@ public class QTETracker : MonoBehaviour
    
     //public float perfectTime;
     private static QTETracker pInstance;
-    public static float shrinkTime;
+    public float shrinkTime;
     public Slider Slider;
     public Slider EnemySlider;
     public GameObject CirclePrefab;
@@ -16,30 +16,33 @@ public class QTETracker : MonoBehaviour
     public int unitScore = 20;
     public List<GameObject> hitCircles = new List<GameObject>();
     public float wait;
-    public static bool playerturn;
+    public bool playerturn;
+    public int damagepool = 0;
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        if(pInstance == null)
+        if (pInstance != null && pInstance != this)
         {
-            pInstance = new QTETracker();
+            Destroy(this.gameObject);
+            return;
         }
-        playerturn = true;
-        
+
+        pInstance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
+    private void Start()
+    {
+        Time.timeScale = 1.0f;
     }
     private static QTETracker privGetInstance()
     {
-        if(pInstance == null)
-        {
-            pInstance = new QTETracker();
-        }
         return pInstance;
     }
     public static void UpdateSlider()
     {
         QTETracker pTracker = QTETracker.privGetInstance();
-        if(QTETracker.playerturn)
+        if(pTracker.playerturn)
         {
             pTracker.Slider.value += pTracker.unitScore;
         }
@@ -60,9 +63,10 @@ public class QTETracker : MonoBehaviour
             return pTracker.EnemySlider;
         }
     }
-    public static IEnumerator InstantiateCircle(CircleTrans trans, int score)
+    public static IEnumerator InstantiateCircle(CircleTrans trans, int score, int damage)
     {
         QTETracker pTracker = QTETracker.privGetInstance();
+        pTracker.damagepool += damage;
         pTracker.unitScore = score;
         for (int i = 0; i < trans.transforms.Length; i++)
         {
@@ -76,6 +80,27 @@ public class QTETracker : MonoBehaviour
         yield return new WaitForSeconds(1f);
         yield break;
     }
+
+    public static void ClearSlider(bool playerturn)
+    {
+        QTETracker pTracker = QTETracker.privGetInstance();
+        if (playerturn)
+        {
+            pTracker.Slider.value = 0;
+        }
+        else
+        {
+            pTracker.EnemySlider.value = 0;
+        }
+    }
+
+    public static int GetandClearDamage()
+    {
+        QTETracker pTracker = QTETracker.privGetInstance();
+        int res = pTracker.damagepool;
+        pTracker.damagepool = 0;
+        return res;
+    }
     public static void DeleteObjects()
     {
         QTETracker pTracker = QTETracker.privGetInstance();
@@ -86,6 +111,18 @@ public class QTETracker : MonoBehaviour
         pTracker.hitCircles.Clear();
     }
     // Update is called once per frame
+
+    public static float GetShrinkTime()
+    {
+        QTETracker pTracker = QTETracker.privGetInstance();
+        return pTracker.shrinkTime;
+    }
+    public static void SetTurn(bool t)
+    {
+        QTETracker pTracker = QTETracker.privGetInstance();
+        pTracker.playerturn = t;
+    }
+
     void Update()
     {
         

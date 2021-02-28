@@ -15,6 +15,8 @@ public class AttackCard : Card
 
     public override void execute()
     {
-        QTETracker.InstantiateCircle(TransPrefab.GetComponent<CircleTrans>(), unitscore);
+        Debug.Log("Attack Card Execute");
+        //QTETracker.InstantiateCircle(TransPrefab.GetComponent<CircleTrans>(), unitscore, attack);
+        StartCoroutine(QTETracker.InstantiateCircle(TransPrefab.GetComponent<CircleTrans>(), unitscore, attack));
     }
 }

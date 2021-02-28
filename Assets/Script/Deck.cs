@@ -8,6 +8,11 @@ public class Deck : MonoBehaviour
     private List<Card> reserve = new List<Card>();
     public List<Card> graveyard = new List<Card>();
     private int numCardRemain;
+    public Card testCard;
+    private void Awake()
+    {
+        reserve.Add(testCard);   
+    }
 
     public void shuffle()
     {
@@ -37,10 +42,11 @@ public class Deck : MonoBehaviour
     {
         reserve.Add(card);
     }
-    public void ReserveExecute()
+    public IEnumerator ReserveExecute()
     {
         reserve.ForEach(delegate (Card pCard) { pCard.execute(); graveyard.Add(pCard); });
         reserve.Clear();
+        yield break;
     }
 
 }

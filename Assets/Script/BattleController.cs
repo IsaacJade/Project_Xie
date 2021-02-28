@@ -27,11 +27,13 @@ public class BattleController : MonoBehaviour
     public Text Log;
     public float delay;
     public BattleState state;
+    public Deck playerDeck;
 
     private int turnCounter = 0;
     // Start is called before the first frame update
    void Start()
     {
+        Time.timeScale = 1.0f;
         state = BattleState.start;
         StartCoroutine( SetupBattle( ) );            //战斗开始//延时操作3          
     }
@@ -73,7 +75,7 @@ public class BattleController : MonoBehaviour
 
      IEnumerator PlayerAttack()
     {
-        QTETracker.playerturn = true;
+        QTETracker.SetTurn(true);
         //yield return QTETracker.StartCoroutine("InstantiateCircle", QTETracker.TransPrefab.GetComponent<CircleTrans>());
         
         bool isDead = false;
@@ -88,11 +90,12 @@ public class BattleController : MonoBehaviour
         //{
         //    Log.text = "Player attack failed";
         //}
-        int damage = CalDamage()
-
-
-        //Debug.Log("score 0");
-        QTETracker.Slider.value = 0;
+        yield return playerDeck.ReserveExecute();
+        int damage = CalDamage(QTETracker.GetandClearDamage(),true);
+        isDead = enemyunit.TakeDamage(damage);
+        enemyHUD.SetHP(enemyunit.currentHP);
+        Log.text = "Player attack success";
+        QTETracker.ClearSlider(true);
 
         yield return new WaitForSeconds(delay);
 
@@ -112,21 +115,21 @@ public class BattleController : MonoBehaviour
     {
         Log.text = " enemy attack ";
         yield return new WaitForSeconds(delay);
-        QTETracker.playerturn = false;
-        yield return QTETracker.StartCoroutine("InstantiateCircle", QTETracker.TransPrefab.GetComponent<CircleTrans>());
+        QTETracker.SetTurn(false);
+        //yield return QTETracker.StartCoroutine("InstantiateCircle", QTETracker.TransPrefab.GetComponent<CircleTrans>());
 
         bool isDead = false;
-        if (QTETracker.EnemySlider.value > 90)
-        {
-            Log.text = "Enemy attack failed";
-        }
-        else
-        {
+        //if (QTETracker.EnemySlider.value > 90)
+        //{
+        //    Log.text = "Enemy attack failed";
+        //}
+        //else
+        //{
             isDead = playerunit.TakeDamage(enemyunit.damage);
             playerHUD.SetHP(playerunit.currentHP);
             Log.text = "Enemy attack success";
-        }
-        QTETracker.EnemySlider.value = 0;
+        //}
+        //QTETracker.EnemySlider.value = 0;
 
         yield return new WaitForSeconds(delay);
 

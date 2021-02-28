@@ -5,6 +5,7 @@ using UnityEngine;
 //[CreateAssetMenu(fileName = "New Card", menuName = "Card")]
 public abstract class Card : MonoBehaviour {
 
+	public int CardNo; //unique card no.
 	public string cardName;
 	public string description;
 	public Sprite artwork;
