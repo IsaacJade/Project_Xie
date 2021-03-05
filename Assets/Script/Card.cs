@@ -29,9 +29,9 @@ public abstract class Card : MonoBehaviour {
 		Debug.Log(name + ": " + description + " The card costs: " + Cost);
 	}
 
-	public virtual void execute()
+	public virtual IEnumerator execute()
     {
-		this.Print();
+		yield return null;
     }
 
 }

@@ -75,7 +75,7 @@ public class BattleController : MonoBehaviour
 
      IEnumerator PlayerAttack()
     {
-        QTETracker.SetTurn(true);
+        QTETracker.SetTurn(false);
         //yield return QTETracker.StartCoroutine("InstantiateCircle", QTETracker.TransPrefab.GetComponent<CircleTrans>());
         
         bool isDead = false;
@@ -115,7 +115,7 @@ public class BattleController : MonoBehaviour
     {
         Log.text = " enemy attack ";
         yield return new WaitForSeconds(delay);
-        QTETracker.SetTurn(false);
+        QTETracker.SetTurn(true);
         //yield return QTETracker.StartCoroutine("InstantiateCircle", QTETracker.TransPrefab.GetComponent<CircleTrans>());
 
         bool isDead = false;

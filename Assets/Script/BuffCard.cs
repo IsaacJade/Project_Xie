@@ -12,8 +12,9 @@ public class BuffCard : Card
         this.EffectValue = value;
     }
 
-    public override void execute()
+    public override IEnumerator execute()
     {
         base.execute();
+        yield return null;
     }
 }

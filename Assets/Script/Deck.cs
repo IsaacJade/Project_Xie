@@ -44,9 +44,13 @@ public class Deck : MonoBehaviour
     }
     public IEnumerator ReserveExecute()
     {
-        reserve.ForEach(delegate (Card pCard) { pCard.execute(); graveyard.Add(pCard); });
+        foreach(Card card in reserve)
+        {
+            yield return card.execute();
+            graveyard.Add(card);
+        }
         reserve.Clear();
-        yield break;
+        yield return null;
     }
 
 }

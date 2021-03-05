@@ -36,15 +36,27 @@ public class HitCircle : MonoBehaviour
                     //Debug.Log(time);
                     time -= delta;
                     SetHitRingScale(delta * scaleModifier);
+                Debug.Log(QTETracker.GetShrinkTime());
             }
         } else
         {
+            
             overtime = true;
             Debug.Log("TimeDone:" + Time.timeSinceLevelLoad);
             this.gameObject.SetActive(false);
         }
     }
 
+    public void Initialize()
+    {
+        Time.timeScale = 1.0f;
+        ringMinScale = 1f;
+        isClick = false;
+        time = QTETracker.GetShrinkTime();
+        ringStartScale = transform.GetChild(2).GetComponent<RectTransform>().localScale.x;
+        scaleModifier = (ringStartScale - ringMinScale) / QTETracker.GetShrinkTime();
+        overtime = false;
+    }
     public void SetNumber(int i)
     {
         Text text = transform.GetChild(0).GetComponent<Text>();

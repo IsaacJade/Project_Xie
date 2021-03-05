@@ -13,10 +13,10 @@ public class AttackCard : Card
         this.TransPrefab = TransPrefab;
     }
 
-    public override void execute()
+    public override IEnumerator execute()
     {
         Debug.Log("Attack Card Execute");
         //QTETracker.InstantiateCircle(TransPrefab.GetComponent<CircleTrans>(), unitscore, attack);
-        StartCoroutine(QTETracker.InstantiateCircle(TransPrefab.GetComponent<CircleTrans>(), unitscore, attack));
+        yield return StartCoroutine(QTETracker.InstantiateCircle(TransPrefab.GetComponent<CircleTrans>(), unitscore, attack));
     }
 }

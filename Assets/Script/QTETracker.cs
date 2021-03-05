@@ -75,10 +75,10 @@ public class QTETracker : MonoBehaviour
             HitCircle instance = circle.GetComponent<HitCircle>();
             instance.SetNumber(i + 1);
             pTracker.hitCircles.Add(circle);
+            instance.Initialize();
             yield return new WaitForSeconds(pTracker.wait);
         }
         yield return new WaitForSeconds(1f);
-        yield break;
     }
 
     public static void ClearSlider(bool playerturn)
